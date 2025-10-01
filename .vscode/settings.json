@@ -1,0 +1,79 @@
+{
+	// Editor settings
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit",
+		"source.organizeImports": "explicit"
+	},
+	"editor.tabSize": 2,
+	"editor.insertSpaces": true,
+	"editor.wordWrap": "on",
+	"editor.rulers": [80, 120],
+	"editor.bracketPairColorization.enabled": true,
+	"editor.guides.bracketPairs": true,
+
+	// TypeScript settings
+	"typescript.preferences.quoteStyle": "single",
+	"typescript.preferences.importModuleSpecifier": "relative",
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	"typescript.suggest.autoImports": true,
+	"typescript.preferences.includePackageJsonAutoImports": "on",
+
+	// File associations
+	"files.associations": {
+		"*.css": "css",
+		"*.scss": "scss",
+		"*.tsx": "typescriptreact",
+		"*.ts": "typescript"
+	},
+
+	// Auto save
+	"files.autoSave": "onFocusChange",
+
+	// Exclude files from explorer
+	"files.exclude": {
+		"**/.git": true,
+		"**/.DS_Store": true,
+		"**/node_modules": true,
+		"**/.next": true,
+		"**/dist": true,
+		"**/build": true
+	},
+
+	// Search exclude
+	"search.exclude": {
+		"**/node_modules": true,
+		"**/.next": true,
+		"**/dist": true,
+		"**/build": true,
+		"**/*.log": true
+	},
+
+	// Emmet settings
+	"emmet.includeLanguages": {
+		"typescript": "html",
+		"typescriptreact": "html"
+	},
+	"emmet.triggerExpansionOnTab": true,
+
+	// CSS settings
+	"css.validate": true,
+	"scss.validate": true,
+
+	// Git settings
+	"git.autofetch": true,
+	"git.confirmSync": false,
+
+	// Next.js specific
+	"next.telemetry.enabled": false,
+
+	// Terminal settings
+	"terminal.integrated.defaultProfile.windows": "Git Bash",
+
+	// Extensions recommendations
+	"extensions.ignoreRecommendations": false,
+	"[markdown]": {
+		"editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+	}
+}
