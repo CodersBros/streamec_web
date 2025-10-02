@@ -1,23 +1,32 @@
 "use client";
 
-import styled from 'styled-components';
 import Logo from '@/components/ui/Logo';
-import HeaderNav from './HeaderNav.client';
 import { variables } from '@/styles/variables';
+import styled, { css } from 'styled-components';
+import HeaderNav from './HeaderNav.client';
+
+export const responsiveContainerPadding = css`
+  padding-inline:  max(calc((100% - 1440px) / 2), 0px);
+  
+`;
 
 const HeaderRoot = styled.header`
-    position: sticky;
+    position: fixed;
     top: 0;
     z-index: 50;
     background: ${variables.colors.black};
     border-bottom: 1px solid rgba(0,0,0,0.08);
-    padding: 12px 24px;
+    width: 100%;
 `;
-
+const HeaderWrapper = styled.div`
+${responsiveContainerPadding}
+`
 const Row = styled.div`
+
     display: flex;
     align-items: center;
     gap: 32px;
+    padding: 12px 120px;
 `;
 
 const SkipLink = styled.a`
@@ -38,10 +47,13 @@ const SkipLink = styled.a`
 const Header = () => (
     <HeaderRoot>
         <SkipLink href="#main">Przejdź do treści</SkipLink>
-        <Row>
-            <Logo width={96} height={26} alt="Streamec logo" />
+        <HeaderWrapper>
+            <Row>
+                <Logo width={183} height={64} alt="Streamec logo" />
             <HeaderNav />
-        </Row>
+            </Row> 
+        </HeaderWrapper>
+
     </HeaderRoot>
 );
 

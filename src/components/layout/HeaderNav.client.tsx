@@ -43,7 +43,7 @@ const HeaderNav = () => {
           return (
             <NavItem key={section.id}>
               <NavLink
-                href={`#${section.hash}`}
+                href={section.hash}
                 $active={isActive}
                 aria-current={isActive ? 'page' : undefined}
               >
