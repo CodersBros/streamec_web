@@ -4,8 +4,8 @@ import { typographyCss } from '@/styles/typography';
 import Image from 'next/image';
 import React from 'react';
 import styled from 'styled-components';
+import { variables } from '../../styles/variables';
 import ButtonOutlinedLight from './ButtonOutlinedLight';
-import { variables } from '@/styles/variables';
 
 // Union type dla dostępnych ikon w public/icons
 export type IconName =
@@ -39,7 +39,7 @@ const Card = styled.div`
   padding: 28px 32px;
   gap: 25px;
   border-radius: 16px;
-  background: var(--color-surface-alt);
+  background: ${variables.colors.footerBg};
   box-sizing: border-box;
 `;
 
@@ -188,9 +188,12 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
           <ButtonWrapper>
             <ButtonOutlinedLight
               onClick={handleButtonClick}
-              withIcon={true}
-              accent={variables.colors.black}
+              variant="dark"
+              width={210}
+              withBackdropFilter={true}
               label='Read more'
+              withIcon={true}
+
             >
               {buttonText}
             </ButtonOutlinedLight>
