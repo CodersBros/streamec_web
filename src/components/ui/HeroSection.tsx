@@ -1,12 +1,9 @@
-"use client";
+'use client';
 import { Text } from '@/styles/typography';
 import Image from 'next/image';
 import React from 'react';
 import styled from 'styled-components';
 import { variables } from '../../styles/variables';
-
-
-
 
 interface HeroSectionProps {
   backgroundImage: string;
@@ -19,24 +16,30 @@ interface HeroSectionProps {
   quality?: number;
 }
 
-const SectionWrapper = styled.section`
+const Section = styled.section`
+  background-color: ${variables.colors.black};
+   padding: 147px 0 0 0;
+`;
+const ImageWrapper = styled.div`
   position: relative;
   width: 100%;
-  min-height: 480px;
+  min-height: 630px;
   display: flex;
   align-items: center;
   justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+ 
 `;
-
-
 const Background = styled.div`
-  position: absolute;
-  inset: 0;
+  
   overflow: hidden;
   z-index: 0;
-  > span, > img { 
-    position: absolute !important;
-    inset: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 630px;
+  > span,
+  > img {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover;
@@ -56,32 +59,26 @@ const Content = styled.div`
   z-index: 2;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: ${variables.spacing['lg-24']};
+  max-width: 993px;
+  margin: auto;
 `;
-
 
 const IconWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
- 
 `;
 
 const Label = styled(Text)`
   color: ${variables.colors.white};
-  text-align: center;
   margin-bottom: ${variables.spacing['md-16']};
 `;
 
 const ActionsSlot = styled.div`
-  margin-top: ${variables.spacing['md-16']};
-  display: flex;
-  gap: ${variables.spacing['sm-8']};
   position: relative;
   z-index: 2;
 `;
-
 
 const HeroSection: React.FC<HeroSectionProps> = ({
   backgroundImage,
@@ -94,24 +91,26 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   quality,
 }) => {
   return (
-    <SectionWrapper>
-      <Background>
-        <Image
-          src={backgroundImage}
-          alt={imageAlt}
-          fill
-          priority={priority}
-          quality={quality}
-          sizes="100vw"
-        />
-      </Background>
-      <Overlay $overlayColor={overlayColor} />
-      <Content>
-        {actions && <ActionsSlot>{actions}</ActionsSlot>}
-        {icon && <IconWrapper>{icon}</IconWrapper>}
-        <Label variant="heading/xxl">{label}</Label>
-      </Content>
-    </SectionWrapper>
+    <Section>
+      <ImageWrapper>
+        <Background>
+          <Image
+            src={backgroundImage}
+            alt={imageAlt}
+            fill
+            priority={priority}
+            quality={quality}
+            sizes='100vw'
+          />
+        </Background>
+        <Overlay $overlayColor={overlayColor} />
+        <Content>
+          {actions && <ActionsSlot>{actions}</ActionsSlot>}
+          {icon && <IconWrapper>{icon}</IconWrapper>}
+          <Label variant='heading/xxl'>{label}</Label>
+        </Content>
+      </ImageWrapper>
+    </Section>
   );
 };
 

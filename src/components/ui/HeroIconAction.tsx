@@ -1,9 +1,9 @@
 "use client";
 
 import { Text } from '@/styles/typography';
+import { variables } from '@/styles/variables';
 import React from 'react';
 import styled from 'styled-components';
-import { variables } from '@/styles/variables';
 
 
 export interface HeroIconActionProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -17,16 +17,13 @@ export interface HeroIconActionProps extends React.ButtonHTMLAttributes<HTMLButt
 const Wrapper = styled.button<{ $width: number; $accentBg: string; $shadow: string; $blurPx: number; }>`
   all: unset;
   position: relative;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   width: ${({ $width }) => $width}px;
-  height: 48px;
   border-radius: 30px;
   background: ${({ $accentBg }) => $accentBg};
   border: 1px solid ${variables.colors.accent};
-  top: 3px;
-  left: 14px;
   box-shadow: 
     0px 3px 8px 0px #FF00001A,
     0px 14px 14px 0px #FF000017,
