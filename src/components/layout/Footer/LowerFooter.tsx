@@ -1,5 +1,6 @@
 import { Text } from '@/styles/typography';
 import styled from 'styled-components';
+import { variables } from '../../../styles/variables';
 
 const Wrapper = styled.div`
   display: flex;
@@ -21,14 +22,16 @@ const LowerFooter = () => (
   <Wrapper>
     <LinksRow>
       <a href="/privacy" style={{ textDecoration: 'underline' }}>
-        <Text variant="body/md" style={{ color: 'var(--color-text-muted)', letterSpacing: 0 }}>Privacy Policy</Text>
+        <Text variant="body/md" style={{ color: variables.colors.grayA0A, letterSpacing: 0 }}>Privacy Policy</Text>
       </a>
       {' | '}
       <a href="/cookies" style={{ textDecoration: 'underline' }}>
-        <Text variant="body/md" style={{ color: 'var(--color-text-muted)', letterSpacing: 0 }}>Cookies Policy</Text>
+        <Text variant="body/md" style={{ color: variables.colors.grayA0A, letterSpacing: 0 }}>Cookies Policy</Text>
       </a>
     </LinksRow>
-    <Text variant="body/md" style={{ color: 'var(--color-text-muted)', textAlign: 'left' }}>
+    <Text variant="body/md" style={{
+      color: variables.colors.grayA0A, textAlign: 'left'
+    }}>
       &copy; {new Date().getFullYear()} Streamec. All rights reserved.
     </Text>
   </Wrapper>
