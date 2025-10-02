@@ -6,6 +6,9 @@ import Image from 'next/image';
 import React from 'react';
 import styled from 'styled-components';
 
+export interface TeamMember extends Omit<TeamCardProps, 'className' | 'style'> {
+  id: string;
+}
 export interface TeamCardProps {
   imageSrc: string; // 150x150 image (will be rounded 16px)
   name: string;

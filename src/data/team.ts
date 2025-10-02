@@ -1,9 +1,9 @@
-import { Frame184TeamMember } from '@/components/ui/Frame184Section';
+import { TeamMember } from '@/components/ui/TeamCard';
 
-export const TEAM_MEMBERS: Frame184TeamMember[] = [
+export const TEAM_MEMBERS: TeamMember[] = [
   {
     id: 'mem1',
-    imageSrc: '/vercel.svg',
+    imageSrc: '/images/Filip.jpg',
     name: 'Jane Doe',
     role: 'Lead Engineer',
     tag: 'FRONTEND',
@@ -12,7 +12,7 @@ export const TEAM_MEMBERS: Frame184TeamMember[] = [
   },
   {
     id: 'mem2',
-    imageSrc: '/vercel.svg',
+    imageSrc: '/images/default_team.jpg',
     name: 'John Smith',
     role: 'Product Designer',
     tag: 'DESIGN',
@@ -20,7 +20,7 @@ export const TEAM_MEMBERS: Frame184TeamMember[] = [
   },
   {
     id: 'mem3',
-    imageSrc: '/vercel.svg',
+    imageSrc: '/images/default_team.jpg',
     name: 'Alice Brown',
     role: 'Backend Engineer',
     tag: 'BACKEND',
@@ -28,12 +28,12 @@ export const TEAM_MEMBERS: Frame184TeamMember[] = [
   },
   {
     id: 'mem4',
-    imageSrc: '/vercel.svg',
+    imageSrc: '/images/default_team.jpg',
     name: 'Bob Lee',
     role: 'Data Analyst',
     tag: 'DATA',
     email: 'bob.lee@example.com',
   },
-] satisfies Frame184TeamMember[];
+] satisfies TeamMember[];
 
-export type { Frame184TeamMember as TeamMember };
+export type { TeamMember };
