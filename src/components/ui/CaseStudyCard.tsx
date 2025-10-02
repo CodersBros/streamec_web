@@ -1,6 +1,7 @@
 import { Text } from '@/styles/typography';
 import React from 'react';
 import styled from 'styled-components';
+import { variables } from '../../styles/variables';
 
 const Card = styled.article`
   display: flex;
@@ -34,13 +35,18 @@ type CaseStudyCardProps = {
   description2: string;
 };
 
-const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ imageSrc, title, description1, description2 }) => (
+const CaseStudyCard: React.FC<CaseStudyCardProps> = ({
+  imageSrc,
+  title,
+  description1,
+  description2,
+}) => (
   <Card>
     <Image src={imageSrc} alt={title} />
     <Content>
-      <Text variant="heading/md">{title}</Text>
-      <Text variant="body/md" color="var(--text-secondary)">{description1}</Text>
-      <Text variant="body/md" color="var(--text-secondary)">{description2}</Text>
+      <Text variant='heading/md' style={{ color: variables.colors.black }}>{title}</Text>
+      <Text variant='body/md' style={{ color: variables.colors.gray808 }}>{description1}</Text>
+      <Text variant='body/md' style={{ color: variables.colors.gray808 }}>{description2}</Text>
     </Content>
   </Card>
 );
