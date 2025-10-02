@@ -1,6 +1,6 @@
 export const caseStudies = [
   {
-    imageSrc: '/assets/case-dlc.jpg', // podmień na właściwy asset
+    imageSrc: '/images/DavidLloydClubs.jpg',
     title: 'David Lloyd Clubs',
     description1:
       'David Lloyd Clubs is a leading European provider of premium health, fitness, and leisure facilities. With 134 clubs, more than 730,000 members, over 10.000 employees and a turnover (2024) of £860 million it is the second largest fitness company in Europe.',
@@ -8,7 +8,7 @@ export const caseStudies = [
       'Together with DLC staff Streamec development team customized the Set4Play Playback app to fit DLC needs for signature class creation, distribution and instructor usage. The set up of Set4Play system functionalities includes software to create music mixes, instructional videos, written choreography information and inbuilt instructor support.',
   },
   {
-    imageSrc: '/assets/case-fitness24seven.jpg', // podmień na właściwy asset
+    imageSrc: '/images/Fitness24Seven.jpg',
     title: 'Fitness24Seven',
     description1:
       'Fitness24Seven is an international gym chain with 280 locations in Europe, South America and Thailand. The company has 2.000 employees, and over 600 group fitness instructors.',
