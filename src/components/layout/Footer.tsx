@@ -1,32 +1,33 @@
 'use client';
 
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { FlexWrapper, Wrapper } from '../../styles/index.styled';
+import { variables } from '../../styles/variables';
 import LowerFooter from './Footer/LowerFooter';
 import UpperFooter from './Footer/UpperFooter';
 
-
-
-
-
-const FooterWrapper = styled.footer`
-    width: 100%;
-    min-height: 120px;
-    background: var(--footer-bg, #f8f8f8);
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-end;
-    padding: 32px 0 0 0;
-    gap: 0;
+export const responsiveContainerPadding = css`
+  padding-inline:  max(calc((100% - 1440px) / 2), 0px);
+  
 `;
+const FooterWrapper = styled.footer`
+${responsiveContainerPadding}
+  width: 100%;
+  min-height: 120px;
+  background: ${variables.colors.black};
 
-
+`;
 
 const Footer: React.FC = () => (
     <FooterWrapper>
-        <UpperFooter />
-        <LowerFooter />
+        <Wrapper $laptopPadding='60px 120px' >
+            <FlexWrapper $mobileDirection='column' $mobileItems='stretch' $mobileGap={variables.spacing['xl-32']}  >
+                <UpperFooter />
+                <LowerFooter /> 
+            </FlexWrapper>
+
+        </Wrapper>
     </FooterWrapper>
 );
 
