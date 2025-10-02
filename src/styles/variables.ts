@@ -7,6 +7,7 @@ const spacing = {
   'xl-32': '32px',
   'xxl-40': '40px',
   'xxxl-64': '64px',
+  'global-horizontal-desktop': '120px',
 };
 
 const colors = {
