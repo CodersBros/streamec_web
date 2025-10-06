@@ -1,6 +1,12 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  
+  /* Fonty z Next.js */
+  --font-base: var(--font-instrument-sans), 'Manrope', sans-serif;
+  --font-heading: var(--font-manrope), sans-serif;
+  --font-button: var(--font-inter), sans-serif;
+  --font-accent: 'Consolas', monospace;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,7 +25,7 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-base);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
