@@ -1,9 +1,11 @@
 'use client';
-import { Text } from '@/styles/typography';
+import Text from '@/styles/text';
 import Image from 'next/image';
 import React from 'react';
 import styled from 'styled-components';
 import { variables } from '../../styles/variables';
+import ArrowDownWrapper from './ArrowDownWrapper';
+
 
 interface HeroSectionProps {
   backgroundImage: string;
@@ -18,7 +20,7 @@ interface HeroSectionProps {
 
 const Section = styled.section`
   background-color: ${variables.colors.black};
-   padding: 147px 0 0 0;
+   padding: 147px 0 98px 0;
 `;
 const ImageWrapper = styled.div`
   position: relative;
@@ -36,7 +38,7 @@ const Background = styled.div`
   overflow: hidden;
   z-index: 0;
   max-width: 1200px;
-  margin: 0 auto;
+ 
   min-height: 630px;
   > span,
   > img {
@@ -60,19 +62,21 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${variables.spacing['lg-24']};
-  max-width: 993px;
+  max-width: 331px;
   margin: auto;
+
+  @media ${variables.media.tablet} {
+    max-width: 658px;
+  }
+  @media ${variables.media.tabletXL} {
+    max-width: 993px;
+  }
 `;
 
 const IconWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const Label = styled(Text)`
-  color: ${variables.colors.white};
-  margin-bottom: ${variables.spacing['md-16']};
 `;
 
 const ActionsSlot = styled.div`
@@ -107,9 +111,20 @@ const HeroSection: React.FC<HeroSectionProps> = ({
         <Content>
           {actions && <ActionsSlot>{actions}</ActionsSlot>}
           {icon && <IconWrapper>{icon}</IconWrapper>}
-          <Label variant='heading/xxl'>{label}</Label>
+          <Text
+            as='h1'
+            $variant='heading/xl'
+            style={{
+              color: variables.colors.white,
+              marginBottom: variables.spacing['md-16']
+            }}
+          >
+            {label}
+          </Text>
         </Content>
+        <ArrowDownWrapper />
       </ImageWrapper>
+
     </Section>
   );
 };

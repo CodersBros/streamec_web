@@ -41,7 +41,7 @@ const Wrapper = styled.button<{ $width: number; $accentBg: string; $shadow: stri
   &:focus-visible { outline: 2px solid var(--color-accent, #ff5252); outline-offset: 3px; }
 `;
 
-const Label = styled(Text).attrs({ variant: 'label/sm' })`
+const Label = styled(Text).attrs({ $variant: 'label/sm' })`
   color: #FFD4D4;
   font-family: Consolas, Manrope, monospace;
   font-size: 16px;
@@ -68,7 +68,7 @@ export const HeroIconAction: React.FC<HeroIconActionProps> = ({
       $blurPx={blurPx}
       {...rest}
     >
-      <Label variant="label/sm">{label}</Label>
+      <Label $variant="label/sm">{label}</Label>
     </Wrapper>
   );
 };
