@@ -1,18 +1,15 @@
-// Dane usług (sekcja OurServicesSection)
-// Używa rzeczywistych nazw ikon z public/icons i obrazów z public/images
-
 import { IconName, ImageName } from '@/components/ui/ServiceCard';
 
 export interface ServiceItem {
   id: string;
   title: string;
   description: string;
-  iconName?: IconName; // Opcjonalne - ikona SVG
-  imageName?: ImageName; // Opcjonalne - zdjęcie JPG/PNG
-  showButton?: boolean; // Czy pokazać przycisk
-  buttonText?: string; // Tekst przycisku
-  buttonUrl?: string; // URL do przekierowania
-  buttonAction?: string; // Akcja do wykonania
+  imageName?: ImageName;
+  iconName?: IconName;
+  showButton?: boolean;
+  buttonText?: string;
+  buttonAction?: string;
+  url?: string;
 }
 
 export const SERVICES_ITEMS: ServiceItem[] = [
@@ -25,6 +22,7 @@ export const SERVICES_ITEMS: ServiceItem[] = [
     showButton: true,
     buttonText: 'Read more',
     buttonAction: 'pin2',
+    url: 'https://www.pin2enterprise.com/login',
   },
   {
     id: 'svc2',
@@ -35,6 +33,7 @@ export const SERVICES_ITEMS: ServiceItem[] = [
     showButton: true,
     buttonText: 'Read more',
     buttonAction: 'set4play',
+    url: 'https://gymmusic.com/en/front-page/',
   },
   {
     id: 'svc3',

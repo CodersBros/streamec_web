@@ -5,20 +5,34 @@ import { variables } from '../../styles/variables';
 
 const Card = styled.article`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  background: var(--surface-neutral, #f7f7f7);
+  background: ${variables.colors.footerBg};
   border-radius: 16px;
   padding: 28px 32px;
   gap: 25px;
+  @media ${variables.media.tabletXL} {
+    flex-direction: row;
+  }
 `;
 
 const Image = styled.img`
-  width: 337px;
-  height: 229px;
+  width: 100%;
+  height: auto;
   border-radius: 8px;
   object-fit: cover;
   flex-shrink: 0;
+
+  @media ${variables.media.tablet} {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    flex-shrink: 1;
+  }
+   @media ${variables.media.tabletXL} {
+    width: 337px;
+    height: 229px;
+  }
 `;
 
 const Content = styled.div`
@@ -44,9 +58,15 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({
   <Card>
     <Image src={imageSrc} alt={title} />
     <Content>
-      <Text variant='heading/md' style={{ color: variables.colors.black }}>{title}</Text>
-      <Text variant='body/md' style={{ color: variables.colors.gray808 }}>{description1}</Text>
-      <Text variant='body/md' style={{ color: variables.colors.gray808 }}>{description2}</Text>
+      <Text $variant='heading/md' style={{ color: variables.colors.black }}>
+        {title}
+      </Text>
+      <Text $variant='body/md' style={{ color: variables.colors.gray808 }}>
+        {description1}
+      </Text>
+      <Text $variant='body/md' style={{ color: variables.colors.gray808 }}>
+        {description2}
+      </Text>
     </Content>
   </Card>
 );
