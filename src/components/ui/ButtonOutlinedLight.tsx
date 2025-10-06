@@ -13,19 +13,20 @@ export type ButtonOutlinedLightVariant = 'dark' | 'light';
 
 export interface ButtonOutlinedLightProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label?: string;
-  icon?: React.ReactNode; // custom override ikony strzałki
-  withIcon?: boolean; // szybkie wyłączenie ikony
+  icon?: React.ReactNode;
+  withIcon?: boolean; 
   size?: ButtonOutlinedLightSize;
-  variant?: ButtonOutlinedLightVariant; // dark (#000) vs light (#FFF) border
-  accent?: string; // override accent color pigułki
-  width?: number; // fixed width override (175px, 210px)
-  withBackdropFilter?: boolean; // backdrop-filter na całym buttonie
+  variant?: ButtonOutlinedLightVariant;
+  accent?: string;
+  width?: number;
+  withBackdropFilter?: boolean;
+  url?: string;
 }
 
 
 
 const sizeTokens: Record<ButtonOutlinedLightSize, { padY: number; padL: number; padR: number; iconBox: number; gap: number; fontVariant: TypographyAlias; height: number; }> = {
-  md: { padY: 6, padL: 24, padR: 4, iconBox: 48, gap: 10, fontVariant: 'body/md', height: 60 },
+  md: { padY: 0, padL: 24, padR: 0, iconBox: 48, gap: 10, fontVariant: 'body/md', height: 60 },
   sm: { padY: 4, padL: 20, padR: 4, iconBox: 40, gap: 8, fontVariant: 'body/sm', height: 60 },
 };
 
@@ -43,8 +44,6 @@ const rootStyles = ({ $size, $variant, $width, $withBackdropFilter, $hasIcon }: 
 }) => {
   const sizeT = sizeTokens[$size];
   const variantT = variantTokens[$variant];
-  // Dla dark variant z ikoną używamy oryginalnego paddingu (4px po prawej)
-  // Dla light variant bez ikony używamy symetrycznego paddingu
   const rightPadding = $hasIcon ? sizeT.padR : sizeT.padL;
   return css`
     padding: ${sizeT.padY}px ${rightPadding}px ${sizeT.padY}px ${sizeT.padL}px;
@@ -123,14 +122,22 @@ export const ButtonOutlinedLight: React.FC<ButtonOutlinedLightProps> = ({
   accent,
   width,
   withBackdropFilter = false,
+  url,
   className,
+  onClick,
   ...rest
 }) => {
   const fontVariant = sizeTokens[size].fontVariant;
 
-  // Domyślne zachowanie: dark MA ikonę, light BEZ ikony
   const defaultWithIcon = variant === 'dark';
   const shouldShowIcon = withIcon !== undefined ? withIcon : defaultWithIcon;
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (url) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+    onClick?.(e);
+  };
 
   return (
     <Root
@@ -140,6 +147,7 @@ export const ButtonOutlinedLight: React.FC<ButtonOutlinedLightProps> = ({
       $width={width}
       $withBackdropFilter={withBackdropFilter}
       $hasIcon={shouldShowIcon}
+      onClick={handleClick}
       {...rest}
     >
       <Label $variant={fontVariant}>{label}</Label>
