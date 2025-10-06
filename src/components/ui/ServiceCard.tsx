@@ -2,12 +2,11 @@
 
 import { typographyCss } from '@/styles/typography';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { variables } from '../../styles/variables';
 import ButtonOutlinedLight from './ButtonOutlinedLight';
 
-// Union type dla dostępnych ikon w public/icons
 export type IconName =
   | 'Arrow Sync'
   | 'Arrow'
@@ -16,7 +15,6 @@ export type IconName =
   | 'People'
   | 'Person Voice';
 
-// Union type dla dostępnych obrazów w public/images
 export type ImageName = 'Pin2Logo.svg' | 'Set4PlayLogo.svg';
 
 export interface ServiceCardProps {
@@ -25,10 +23,10 @@ export interface ServiceCardProps {
   icon?: React.ReactNode;
   iconName?: IconName;
   imageName?: ImageName;
-  showButton?: boolean; // Czy pokazać przycisk
-  buttonText?: string; // Tekst przycisku
-  buttonUrl?: string; // URL do przekierowania
-  buttonAction?: string; // Akcja do wykonania
+  showButton?: boolean;
+  buttonText?: string;
+  buttonUrl?: string;
+  buttonAction?: string;
   className?: string;
   style?: React.CSSProperties;
 }
@@ -41,13 +39,14 @@ const Card = styled.div`
   border-radius: 16px;
   background: ${variables.colors.footerBg};
   box-sizing: border-box;
+  
 `;
 
 const IconBox = styled.div`
   width: 66px;
   height: 66px;
   border-radius: 8px;
-  background: var(--color-white);
+  background: ${variables.colors.white};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -64,52 +63,45 @@ const InnerIcon = styled.div`
 const DefaultIconWrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  color: var(--color-text);
+  justify-content: flex-start;
+  width: 100%;
+  
+  
 `;
 
 const TextStack = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+  flex: 1; 
+  justify-content: space-between;
 `;
 
 const TitleEl = styled.h3`
-  ${typographyCss('heading/lg')}
-  color: var(--color-text);
+  ${typographyCss('heading/card')}
+  color: ${variables.colors.black};
   margin: 0;
+  
+  /* Minimalna wysokość dla 2 linii - wyrównuje karty */
+  min-height: 2.4em; /* Zakładam line-height 1.2, więc 2 linie = 2.4em */
+
+  /* Dynamiczne dostosowanie na podstawie liczby linii */
+  &[data-lines="3"],
+  &[data-lines="4"] {
+    margin-bottom: 4px;
+  }
 `;
 
 const DescEl = styled.p`
   ${typographyCss('body/sm')}
   color: var(--color-text-subtle);
   margin: 0;
+  /* Minimalna wysokość dla 3 linii opisu */
+  min-height: 3.6em; /* Zakładam line-height 1.2, więc 3 linie = 3.6em */
 `;
 
 const ButtonWrapper = styled.div`
   margin-top: 16px;
-`;
-
-const ActionButton = styled.button`
-  background: var(--color-accent, #be1011);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 12px 24px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-
-  &:hover {
-    background: color-mix(in srgb, var(--color-accent, #be1011) 90%, black);
-  }
-
-  &:active {
-    transform: translateY(1px);
-  }
 `;
 
 const ServiceCard: React.FC<ServiceCardProps> = ({
@@ -125,12 +117,29 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   className,
   style,
 }) => {
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const [lineCount, setLineCount] = useState(1);
+
+  useEffect(() => {
+    if (!titleRef.current) return;
+
+    const calculateLines = () => {
+      const element = titleRef.current!;
+      const lineHeight = parseFloat(getComputedStyle(element).lineHeight);
+      const height = element.offsetHeight;
+      const lines = Math.round(height / lineHeight);
+      setLineCount(lines);
+    };
+
+    calculateLines();
+    window.addEventListener('resize', calculateLines);
+    return () => window.removeEventListener('resize', calculateLines);
+  }, [title]);
+
   const handleButtonClick = () => {
     if (buttonUrl) {
-      // Przekieruj do URL
       window.open(buttonUrl, '_blank');
     } else if (buttonAction) {
-      // Wykonaj akcję na podstawie buttonAction
       switch (buttonAction) {
         case 'pin2':
           console.log('Navigate to Pin2 Enterprise');
@@ -147,7 +156,6 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   const renderIcon = () => {
     if (icon) return icon;
 
-    // Priorytet: imageName > iconName > fallback
     if (imageName) {
       return (
         <DefaultIconWrapper>
@@ -165,24 +173,26 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
     const iconPath = `/icons/${iconName || 'People'}.svg`;
 
     return (
-      <DefaultIconWrapper>
+      <IconBox>
+        <InnerIcon>
         <Image
           src={iconPath}
           alt={`${iconName || 'People'} icon`}
           width={22}
           height={22}
         />
-      </DefaultIconWrapper>
+        </InnerIcon>
+      </IconBox>
     );
   };
 
   return (
     <Card className={className} style={style}>
-      <IconBox>
-        <InnerIcon>{renderIcon()}</InnerIcon>
-      </IconBox>
+      {renderIcon()}
       <TextStack>
-        <TitleEl>{title}</TitleEl>
+        <TitleEl ref={titleRef} data-lines={lineCount}>
+          {title}
+        </TitleEl>
         <DescEl>{description}</DescEl>
         {showButton && (
           <ButtonWrapper>
@@ -193,7 +203,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
               withBackdropFilter={true}
               label='Read more'
               withIcon={true}
-
+              url={buttonUrl}
             >
               {buttonText}
             </ButtonOutlinedLight>
