@@ -12,7 +12,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
   },
   {
     id: 'mem2',
-    imageSrc: '/images/default_team.jpg',
+    imageSrc: '/images/01.png',
     name: 'John Smith',
     role: 'Product Designer',
     tag: 'DESIGN',
@@ -20,7 +20,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
   },
   {
     id: 'mem3',
-    imageSrc: '/images/default_team.jpg',
+    imageSrc: '/images/02.png',
     name: 'Alice Brown',
     role: 'Backend Engineer',
     tag: 'BACKEND',
@@ -28,7 +28,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
   },
   {
     id: 'mem4',
-    imageSrc: '/images/default_team.jpg',
+    imageSrc: '/images/03.png',
     name: 'Bob Lee',
     role: 'Data Analyst',
     tag: 'DATA',
@@ -37,3 +37,4 @@ export const TEAM_MEMBERS: TeamMember[] = [
 ] satisfies TeamMember[];
 
 export type { TeamMember };
+

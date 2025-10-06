@@ -1,7 +1,7 @@
 'use client';
 
 import { TEAM_MEMBERS } from '@/data/team';
-import { Text } from '@/styles/typography';
+import { Text, typographyCss } from '@/styles/typography';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FlexWrapper, Wrapper } from '../../styles/index.styled';
@@ -9,23 +9,21 @@ import { variables } from '../../styles/variables';
 import Sparkle from '../assets/Sparkle';
 import TeamCard from './TeamCard';
 
-const SectionWrapper = styled.section`
+const SectionWrapper = styled(Wrapper)`
   display: flex;
   flex-direction: column;
   gap: ${variables.spacing['lg-24']};
   background: ${variables.colors.footerBg};
-  padding: 0 ${variables.spacing['global-horizontal-desktop']};
   max-width: 1440px;
   margin: 0 auto;
-  
 `;
 const TextWrapper = styled.div`
-border: 1px solid ${variables.colors.accent};
-padding: 10px ${variables.spacing['lg-24']};
-border-radius: 30px;
-max-width: 271px;
-  margin: 0 auto 12px auto ;
-`
+  border: 1px solid ${variables.colors.accent};
+  padding: 10px ${variables.spacing['lg-24']};
+  border-radius: 30px;
+  max-width: 271px;
+  margin: 0 auto 12px auto;
+`;
 const FilterBar = styled.div`
   display: flex;
   gap: ${variables.spacing['md-16']};
@@ -34,6 +32,7 @@ const FilterBar = styled.div`
 `;
 
 const FilterButton = styled.button<{ $active: boolean }>`
+  ${typographyCss('tag/sm')}
   display: inline-flex;
   align-items: center;
   gap: ${variables.spacing['sm-8']};
@@ -43,10 +42,8 @@ const FilterButton = styled.button<{ $active: boolean }>`
   background: ${({ $active }) =>
     $active ? variables.colors.accent : variables.colors.surfaceAlt};
   color: ${({ $active }) =>
-    $active ? variables.colors.white : variables.colors.dark};
-  font-family: ${variables.fontFamilies.heading};
+  $active ? variables.colors.white : variables.colors.dark};
   font-weight: 600;
-  font-size: 15px;
   letter-spacing: -0.2px;
   cursor: pointer;
   box-shadow: ${({ $active }) =>
@@ -56,12 +53,15 @@ const FilterButton = styled.button<{ $active: boolean }>`
   min-width: ${variables.spacing['xxxl-64']};
   justify-content: center;
   text-align: center;
+  border: 1px solid
+    ${({ $active }) =>
+    $active ? 'transparent' : variables.colors.gray808};
   &:hover,
   &:focus {
     background: ${({ $active }) =>
-    $active ? variables.colors.accent : variables.colors.surfaceAlt};
+  $active ? variables.colors.accent : variables.colors.surfaceAlt};
     color: ${({ $active }) =>
-    $active ? variables.colors.white : variables.colors.accent};
+  $active ? variables.colors.white : variables.colors.accent};
     box-shadow: 0 6px 20px rgba(190, 16, 17, 0.12);
   }
 `;
@@ -86,20 +86,42 @@ const TeamFilterSection: React.FC = () => {
       : TEAM_MEMBERS.filter(m => m.tag === activeTag);
 
   return (
-    <SectionWrapper>
+    <SectionWrapper
+      $mobilePadding={`0 ${variables.spacing['global-horizontal-mobile']} `}
+      $tabletXLPadding={`0 ${variables.spacing['global-horizontal-desktop']}`}
+      $tabletPadding={`0 ${variables.spacing['global-horizontal-tablet']}`}
+    >
       <TextWrapper>
-        <FlexWrapper $mobileItems='center' $mobileGap={variables.spacing['sm-8']}>
+        <FlexWrapper
+          $mobileItems='center'
+          $mobileGap={variables.spacing['sm-8']}
+        >
           <Sparkle color={variables.colors.accent} />{' '}
-          <Text variant={'label/md'} style={{ color: variables.colors.accent }}>
+          <Text
+            $variant={'label/md'}
+            style={{ color: variables.colors.accent }}
+          >
             PEOPLE BEHIND THE APP
           </Text>
         </FlexWrapper>
       </TextWrapper>
-      <Text as='h2' variant='heading/xxl' style={{ textAlign: 'center' }}>
+      <Text as='h2' $variant='heading/xl' style={{ textAlign: 'center' }}>
         Meet our Team
       </Text>
       <Wrapper $mobileMaxWidth='660px' $mobileMargin='0 auto'>
-        <Text as='p' variant={'body/md'} style={{ fontSize: '20px', color: variables.colors.gray414, textAlign: 'center', letterSpacing: '-2%' }}>Behind every solution is a team of dedicated professionals — bringing expertise from across Europe to help our customers succeed.</Text>
+        <Text
+          as='p'
+          $variant={'body/md'}
+          style={{
+            fontSize: '20px',
+            color: variables.colors.gray414,
+            textAlign: 'center',
+            letterSpacing: '-2%',
+          }}
+        >
+          Behind every solution is a team of dedicated professionals — bringing
+          expertise from across Europe to help our customers succeed.
+        </Text>
       </Wrapper>
       <FilterBar>
         {tags.map(tag => (

@@ -10,12 +10,12 @@ export interface TeamMember extends Omit<TeamCardProps, 'className' | 'style'> {
   id: string;
 }
 export interface TeamCardProps {
-  imageSrc: string; // 150x150 image (will be rounded 16px)
+  imageSrc: string;
   name: string;
   role: string;
-  tag?: string; // e.g., FRONTEND/BACKEND
-  phone?: string; // +XX XXX XXX XXX
-  email?: string; // name.surname@gmail.com
+  tag?: string;
+  phone?: string;
+  email?: string; 
   className?: string;
   style?: React.CSSProperties;
 }
