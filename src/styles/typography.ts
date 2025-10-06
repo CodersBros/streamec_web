@@ -1,15 +1,28 @@
 import { variables } from '@/styles/variables';
 import { css } from 'styled-components';
 
-// Typ aliasów presetów (zgodnie z variables)
+export interface TypographyDef {
+  fontSize?: string;
+  fontWeight: number;
+  fontFamily?: string;
+  lineHeight?: string;
+  letterSpacing?: string;
+  textTransform?: string;
+}
+
 export type TypographyPresetKey = keyof typeof variables.typography;
-
-type TypographyDef =
-  (typeof variables.typography)[keyof typeof variables.typography];
-
-// Typografia z variables
-export const typography = variables.typography;
-
+export type TypographyDefExtended = TypographyDef;
+export const typography: Record<string, TypographyDef> = Object.fromEntries(
+  Object.entries(variables.typography)
+    .map(([key, def]) => ({
+      [key]: {
+        ...def,
+        lineHeight:
+          def.lineHeight !== undefined ? String(def.lineHeight) : undefined,
+      },
+    }))
+    .flatMap(Object.entries)
+);
 export type TypographyKey = keyof typeof variables.typography;
 
 /**
@@ -41,24 +54,29 @@ export type TypographyKey = keyof typeof variables.typography;
  * - instrument/body/md: tekst Instrument Sans
  */
 
-// Typ aliasu = klucz z variables.typography
 export type TypographyAlias = keyof typeof variables.typography;
 export type TypographyVariant = TypographyAlias;
 
 export const typographyCss = (key: TypographyAlias) => {
-  const t = typography[key] as TypographyDef;
+  const t = typography[key];
+  if (!t) {
+    console.error(
+      `Typography variant "${key}" not found in typography definitions`
+    );
+    return css``;
+  }
   return css`
-    font-family: ${t.fontFamily};
+    ${t.fontFamily ? `font-family: ${t.fontFamily};` : ''}
     font-weight: ${t.fontWeight};
-    font-size: ${t.fontSize};
-    line-height: ${t.lineHeight};
+    ${t.fontSize ? `font-size: ${t.fontSize};` : ''}
+    ${t.lineHeight ? `line-height: ${t.lineHeight};` : ''}
+    ${t.letterSpacing ? `letter-spacing: ${t.letterSpacing};` : ''}
+    ${t.textTransform ? `text-transform: ${t.textTransform};` : ''}
   `;
 };
 
-// Wariant typografii – alias (to samo co typographyCss)
-export const typographyVariantCss = (variant: TypographyAlias) => {
-  return typographyCss(variant);
-};
+export const typographyVariantCss = (variant: TypographyAlias) =>
+  typographyCss(variant);
 
 /**
  * Szybkie przykłady użycia aliasów:
@@ -70,4 +88,4 @@ export const typographyVariantCss = (variant: TypographyAlias) => {
  * <Text variant="manrope60028">(Fallback do surowego klucza – unikaj jeśli nie musisz)</Text>
  */
 
-export { default as Text } from './text'; // TSX plik (text.tsx) - resolver bundlera obsłuży
+export { default as Text } from './text';
