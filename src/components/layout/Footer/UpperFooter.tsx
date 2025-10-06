@@ -7,10 +7,20 @@ import { FlexWrapper } from '../../../styles/index.styled';
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: row;
-  gap: ${variables.spacing['xl-32']};
-  align-items: center;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
   justify-content: space-between;
+
+
+
+  @media ${variables.media.tablet} {
+flex-direction: row;
+gap: ${variables.spacing['xl-32'] };
+align-items: center;
+  justify-content: space-between;
+
+  }
 `;
 
 const UpperFooter = () => (
@@ -20,10 +30,13 @@ const UpperFooter = () => (
       aria-label='Streamec homepage'
       style={{ display: 'flex', alignItems: 'center' }}
     >
-      <Logo width={120} height={32} alt='Streamec logo' />
+      <Logo width={243} height={86} alt='Streamec logo' />
     </Link>
     <FlexWrapper
-      $mobileGap={variables.spacing['xl-32']}
+      $mobileGap='12px'
+      $mobileDirection='column'
+      $tabletDirection='row'
+      $mobileWrap='wrap'
 
     >
       <Text
