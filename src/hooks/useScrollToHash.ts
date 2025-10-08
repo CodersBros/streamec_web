@@ -1,5 +1,6 @@
 'use client';
-import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import { useEffect, useRef } from 'react';
 
 const HEADER_HEIGHT = 90;
 
@@ -27,33 +28,92 @@ const smoothScrollTo = (targetY: number, duration = 800) => {
   requestAnimationFrame(scroll);
 };
 
-export function useScrollToHash(deps: ReadonlyArray<unknown> = []) {
+export function useScrollToHash() {
+  const pathname = usePathname();
+  const isScrollingRef = useRef(false);
+  const lastHashRef = useRef('');
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
+    console.log('[useScrollToHash] Effect mounted, pathname:', pathname);
+
     const scrollToHash = () => {
       const { hash } = window.location;
-      if (!hash) return;
+
+      console.log(
+        '[scrollToHash] Called, hash:',
+        hash,
+        'lastHash:',
+        lastHashRef.current,
+        'isScrolling:',
+        isScrollingRef.current
+      );
+
+      
+      if (isScrollingRef.current) {
+        console.log('[scrollToHash] Blocked - already scrolling');
+        return;
+      }
+
+      
+      if (hash && hash === lastHashRef.current) {
+        console.log('[scrollToHash] Hash unchanged, skipping');
+        return;
+      }
+
+      if (!hash) {
+        console.log('[scrollToHash] No hash, skipping');
+        lastHashRef.current = '';
+        return;
+      }
+
       const id = hash.slice(1);
       const el = document.getElementById(id);
-      if (!el) return;
+
+      if (!el) {
+        console.log('[scrollToHash] Element not found:', id);
+        return;
+      }
+
+      console.log('[scrollToHash] Starting scroll to:', id);
+      lastHashRef.current = hash;
+      isScrollingRef.current = true;
 
       requestAnimationFrame(() => {
         setTimeout(() => {
           const top =
             el.getBoundingClientRect().top + window.scrollY - HEADER_HEIGHT;
+          console.log('[scrollToHash] Scroll target Y:', top);
           smoothScrollTo(top);
+
+          
+          setTimeout(() => {
+            isScrollingRef.current = false;
+            console.log('[scrollToHash] Scroll complete, flag reset');
+          }, 850);
         }, 50);
       });
     };
 
-    scrollToHash();
+   
+    if (pathname === '/' && window.location.hash) {
+      scrollToHash();
+    }
 
-    window.addEventListener('hashchange', scrollToHash);
+    
+    const handleHashChange = () => {
+      console.log('[handleHashChange] Event triggered');
+      scrollToHash();
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    console.log('[useScrollToHash] Listener added');
 
     return () => {
-      window.removeEventListener('hashchange', scrollToHash);
+      console.log('[useScrollToHash] Cleanup, removing listener');
+      window.removeEventListener('hashchange', handleHashChange);
+      isScrollingRef.current = false;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps);
+  }, [pathname]);
 }
