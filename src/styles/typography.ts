@@ -88,4 +88,4 @@ export const typographyVariantCss = (variant: TypographyAlias) =>
  * <Text variant="manrope60028">(Fallback do surowego klucza – unikaj jeśli nie musisz)</Text>
  */
 
-export { default as Text } from './text';
+
