@@ -1,5 +1,5 @@
 import Logo from '@/components/ui/Logo';
-import { Text } from '@/styles/typography';
+import { Text } from '@/styles/index.client';
 import { variables } from '@/styles/variables';
 import Link from 'next/link';
 import styled from 'styled-components';

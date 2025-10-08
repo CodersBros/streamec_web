@@ -1,4 +1,4 @@
-import { Text } from '@/styles/typography';
+import { Text } from '@/styles/index.client';
 import styled from 'styled-components';
 import { variables } from '../../../styles/variables';
 
@@ -28,11 +28,11 @@ const LinksRow = styled.div`
 const LowerFooter = () => (
   <Wrapper>
     <LinksRow>
-      <a href="/privacy" style={{ textDecoration: 'underline' }}>
+      <a href="/legal/privacy" style={{ textDecoration: 'underline' }}>
         <Text variant="body/sm" style={{ color: variables.colors.grayA0A, letterSpacing: 0 }}>Privacy Policy</Text>
       </a>
       {' | '}
-      <a href="/cookies" style={{ textDecoration: 'underline' }}>
+      <a href="/legal/cookies" style={{ textDecoration: 'underline' }}>
         <Text variant="body/sm" style={{ color: variables.colors.grayA0A, letterSpacing: 0 }}>Cookies Policy</Text>
       </a>
     </LinksRow>

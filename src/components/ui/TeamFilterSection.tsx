@@ -1,9 +1,10 @@
 'use client';
 
 import { TEAM_MEMBERS } from '@/data/team';
-import { Text, typographyCss } from '@/styles/typography';
+import { Text } from '@/styles/index.client';
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { typographyCss } from '../../styles';
 import { FlexWrapper, Wrapper } from '../../styles/index.styled';
 import { variables } from '../../styles/variables';
 import Sparkle from '../assets/Sparkle';

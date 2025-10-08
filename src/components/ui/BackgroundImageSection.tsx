@@ -1,4 +1,4 @@
-import { Text } from '@/styles/typography';
+import { Text } from '@/styles/index.client';
 import { variables } from '@/styles/variables';
 import Image from 'next/image';
 import React from 'react';

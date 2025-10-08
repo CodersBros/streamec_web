@@ -1,4 +1,4 @@
-import { Text } from '@/styles/typography';
+import { Text } from '@/styles/index.client';
 import React from 'react';
 import styled from 'styled-components';
 import { variables } from '../../styles/variables';

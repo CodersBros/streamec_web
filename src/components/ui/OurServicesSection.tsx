@@ -1,7 +1,7 @@
 'use client';
 
 import ServiceCard, { IconName, ImageName } from '@/components/ui/ServiceCard';
-import { Text } from '@/styles/typography';
+import { Text } from '@/styles/index.client';
 import { variables } from '@/styles/variables';
 import React from 'react';
 import styled from 'styled-components';
