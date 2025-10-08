@@ -1,9 +1,12 @@
 'use client';
 import { LandingSectionId, landingSections } from '@/data/sections';
-import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 
 export function useActiveSection() {
   const [active, setActive] = useState<LandingSectionId>('hero');
+  const pathname = usePathname();
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
     const elements = landingSections
@@ -20,6 +23,10 @@ export function useActiveSection() {
       const nearBottomThreshold = 50;
       return pageHeight - scrollPosition < nearBottomThreshold;
     };
+
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+    }
 
     const observer = new IntersectionObserver(
       entries => {
@@ -41,31 +48,41 @@ export function useActiveSection() {
       }
     );
 
+    observerRef.current = observer;
     elements.forEach(el => observer.observe(el));
 
-    const handleHashChange = () => {
+    const updateActiveFromHash = () => {
       const hash = window.location.hash.slice(1);
       if (hash) {
-        // Natychmiastowa aktualizacja active state przy zmianie hash
         const section = landingSections.find(s => s.id === hash);
         if (section) {
+          console.log('[useActiveSection] Updating active from hash:', hash);
           setActive(section.id);
         }
       }
     };
 
-    window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener('hashchange', updateActiveFromHash);
 
-    // Sprawdź hash przy pierwszym załadowaniu
+    const handleHashNavigation = () => {
+      console.log('[useActiveSection] hashnavigation event');
+      updateActiveFromHash();
+    };
+    window.addEventListener('hashnavigation', handleHashNavigation);
+
     if (window.location.hash) {
-      handleHashChange();
+      updateActiveFromHash();
     }
 
     return () => {
-      observer.disconnect();
-      window.removeEventListener('hashchange', handleHashChange);
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+        observerRef.current = null;
+      }
+      window.removeEventListener('hashchange', updateActiveFromHash);
+      window.removeEventListener('hashnavigation', handleHashNavigation);
     };
-  }, []);
+  }, [pathname]);
 
   return active;
 }
