@@ -1,10 +1,8 @@
-import Footer from "@/components/layout/Footer";
-import Header from "@/components/layout/Header";
-import ScrollHashEffect from "@/components/layout/ScrollHashEffect";
 import StyledComponentsRegistry from "@/lib/registry";
 import DesignSystemProvider from "@/styles/DesignSystemProvider.client";
 import type { Metadata } from "next";
 import { Instrument_Sans, Inter, Manrope } from "next/font/google";
+import AppShell from '../components/layout/AppShell';
 import "./globals.css";
 
 
@@ -41,17 +39,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pl">
+    <html lang="en">
       <body
         className={`${instrumentSans.variable} ${manrope.variable} ${inter.variable}`}
         suppressHydrationWarning
       >
         <StyledComponentsRegistry>
           <DesignSystemProvider>
-            <ScrollHashEffect />
-            <Header />
+            <AppShell>
             {children}
-            <Footer />
+            </AppShell>
           </DesignSystemProvider>
         </StyledComponentsRegistry>
       </body>
