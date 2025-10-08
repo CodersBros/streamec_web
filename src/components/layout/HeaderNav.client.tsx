@@ -117,7 +117,6 @@ const HeaderNav = ({ isMobile = false, onLinkClick }: HeaderNavProps) => {
 
   const handleNavClick = (e: React.MouseEvent, sectionId: string) => {
     e.preventDefault();
-    console.log('[HeaderNav] Click:', sectionId, 'pathname:', pathname);
     navigateToSection(sectionId);
   };
 

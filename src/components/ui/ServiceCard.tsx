@@ -142,13 +142,10 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
     } else if (buttonAction) {
       switch (buttonAction) {
         case 'pin2':
-          console.log('Navigate to Pin2 Enterprise');
           break;
         case 'set4play':
-          console.log('Navigate to Set4Play');
           break;
         default:
-          console.log(`Action: ${buttonAction}`);
       }
     }
   };

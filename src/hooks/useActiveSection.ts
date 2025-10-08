@@ -4,11 +4,16 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 export function useActiveSection() {
-  const [active, setActive] = useState<LandingSectionId>('hero');
+  const [active, setActive] = useState<LandingSectionId | null>('hero');
   const pathname = usePathname();
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
+    if (pathname !== '/') {
+      setActive(null);
+      return;
+    }
+
     const elements = landingSections
       .map(s => document.getElementById(s.id))
       .filter(Boolean) as HTMLElement[];
@@ -56,7 +61,6 @@ export function useActiveSection() {
       if (hash) {
         const section = landingSections.find(s => s.id === hash);
         if (section) {
-          console.log('[useActiveSection] Updating active from hash:', hash);
           setActive(section.id);
         }
       }
@@ -65,7 +69,6 @@ export function useActiveSection() {
     window.addEventListener('hashchange', updateActiveFromHash);
 
     const handleHashNavigation = () => {
-      console.log('[useActiveSection] hashnavigation event');
       updateActiveFromHash();
     };
     window.addEventListener('hashnavigation', handleHashNavigation);

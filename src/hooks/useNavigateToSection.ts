@@ -35,15 +35,7 @@ export function useNavigateToSection() {
 
   const navigateToSection = useCallback(
     (sectionId: string) => {
-      console.log(
-        '[useNavigateToSection] Navigate to:',
-        sectionId,
-        'pathname:',
-        pathname
-      );
-
       if (isScrollingRef.current) {
-        console.log('[useNavigateToSection] Blocked - already scrolling');
         return;
       }
 
@@ -53,11 +45,9 @@ export function useNavigateToSection() {
         const el = document.getElementById(sectionId);
 
         if (!el) {
-          console.log('[useNavigateToSection] Element not found:', sectionId);
           return;
         }
 
-        console.log('[useNavigateToSection] Scrolling to:', sectionId);
         isScrollingRef.current = true;
 
         window.history.pushState(null, '', hash);
@@ -70,17 +60,14 @@ export function useNavigateToSection() {
           setTimeout(() => {
             const top =
               el.getBoundingClientRect().top + window.scrollY - HEADER_HEIGHT;
-            console.log('[useNavigateToSection] Scroll target Y:', top);
             smoothScrollTo(top);
 
             setTimeout(() => {
               isScrollingRef.current = false;
-              console.log('[useNavigateToSection] Scroll complete');
             }, 850);
           }, 50);
         });
       } else {
-        console.log('[useNavigateToSection] Using router.push to:', `/${hash}`);
         router.push(`/${hash}`);
       }
     },
