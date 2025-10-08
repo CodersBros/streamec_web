@@ -1,7 +1,10 @@
-"use client";
+'use client';
 import { landingSections } from '@/data/sections';
 import { useActiveSection } from '@/hooks/useActiveSection';
+import { useNavigateToSection } from '@/hooks/useNavigateToSection';
 import { variables } from '@/styles/variables';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import styled from 'styled-components';
 import { typographyCss } from '../../styles/typography';
 import { ButtonOutlinedLight } from '../ui/ButtonOutlinedLight';
@@ -39,42 +42,47 @@ const MobileNavList = styled.ul`
 `;
 const NavItem = styled.li``;
 
-const NavLink = styled.a<{ $active: boolean }>`
-${typographyCss('nav/item')}
+const NavLink = styled(Link) <{ $active: boolean }>`
+  ${typographyCss('nav/item')}
   display: inline-block;
   padding: 4px 0;
   text-decoration: none;
-  color: ${({ $active }) => $active ? variables.colors.accent : variables.colors.white};
-  font-weight: ${({ $active }) => $active ? 600 : 500};
+  color: ${({ $active }) =>
+    $active ? variables.colors.accent : variables.colors.white};
+  font-weight: ${({ $active }) => ($active ? 600 : 500)};
   position: relative;
   transition: color 0.2s ease;
   &:after {
     content: '';
     position: absolute;
-    left: 0; right: 0; bottom: -2px;
+    left: 0;
+    right: 0;
+    bottom: -2px;
     height: 2px;
     background: ${variables.colors.accent};
-    opacity: ${({ $active }) => $active ? 1 : 0};
-    transition: opacity .2s;
+    opacity: ${({ $active }) => ($active ? 1 : 0)};
+    transition: opacity 0.2s;
   }
   &:hover {
     color: ${variables.colors.accent};
   }
 `;
 
-const MobileNavLink = styled.a<{ $active: boolean }>`
-${typographyCss('nav/item')}
+const MobileNavLink = styled(Link) <{ $active: boolean }>`
+  ${typographyCss('nav/item')}
   display: block;
   padding: 16px 0;
   text-decoration: none;
   color: ${variables.colors.white};
-  font-weight: ${({ $active }) => $active ? 600 : 500};
+  font-weight: ${({ $active }) => ($active ? 600 : 500)};
   font-size: 24px;
   transition: color 0.2s ease;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
-  
-  ${({ $active }) => $active && `
+
+  ${({ $active }) =>
+    $active &&
+    `
     color: ${variables.colors.accent};
     &:before {
       content: '';
@@ -88,7 +96,7 @@ ${typographyCss('nav/item')}
       border-radius: 2px;
     }
   `}
-  
+
   &:hover {
     color: ${variables.colors.accent};
   }
@@ -101,20 +109,37 @@ interface HeaderNavProps {
 
 const HeaderNav = ({ isMobile = false, onLinkClick }: HeaderNavProps) => {
   const active = useActiveSection();
+  const pathname = usePathname() || '/';
+  const navigateToSection = useNavigateToSection();
+
+  const makeHref = (hash: string) =>
+    pathname.startsWith('/legal') ? `/${hash}` : hash;
+
+  const handleNavClick = (e: React.MouseEvent, sectionId: string) => {
+    e.preventDefault();
+    console.log('[HeaderNav] Click:', sectionId, 'pathname:', pathname);
+    navigateToSection(sectionId);
+  };
 
   if (isMobile) {
     return (
-      <MobileNav aria-label="Mobile navigation">
+      <MobileNav aria-label='Mobile navigation'>
         <MobileNavList>
           {landingSections.map(section => {
             const isActive = active === section.id;
+            const href = makeHref(section.hash);
             return (
               <NavItem key={section.id}>
                 <MobileNavLink
-                  href={section.hash}
                   $active={isActive}
                   aria-current={isActive ? 'page' : undefined}
-                  onClick={onLinkClick}
+                  href={href}
+                  scroll={false}
+                  prefetch={false}
+                  onClick={(e) => {
+                    handleNavClick(e, section.id);
+                    onLinkClick?.();
+                  }}
                 >
                   {section.label}
                 </MobileNavLink>
@@ -127,34 +152,35 @@ const HeaderNav = ({ isMobile = false, onLinkClick }: HeaderNavProps) => {
   }
 
   return (
-    <Nav aria-label="Main navigation">
+    <Nav aria-label='Main navigation'>
       <NavList>
         {landingSections.map(section => {
           const isActive = active === section.id;
+          const href = makeHref(section.hash);
           return (
             <NavItem key={section.id}>
               {section.id === 'team' ? (
                 <ButtonOutlinedLight
                   label={section.label}
                   withIcon={true}
-                  size="md"
+                  size='md'
                   variant={isActive ? 'light' : 'light'}
                   width={210}
                   style={{
                     fontWeight: isActive ? 600 : 500,
-                    color: isActive ? variables.colors.accent : undefined
+                    color: isActive ? variables.colors.accent : undefined,
                   }}
-                  onClick={e => {
-                    e.preventDefault();
-                    window.location.hash = section.hash;
-                  }}
+                  onClick={(e) => handleNavClick(e, section.id)}
                   accent={variables.colors.accent}
                 />
               ) : (
                   <NavLink
-                    href={section.hash}
                     $active={isActive}
                     aria-current={isActive ? 'page' : undefined}
+                    href={href}
+                    scroll={false}
+                    prefetch={false}
+                    onClick={(e) => handleNavClick(e, section.id)}
                   >
                     {section.label}
                   </NavLink>
